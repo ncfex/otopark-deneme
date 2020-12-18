@@ -1,0 +1,108 @@
+@layout('layout.app')
+
+@section('content')
+
+      <div class="box" style="width: max-content;">
+        <h1 class="title">VEHICLE LIST</h1>
+
+      <div class="table-responsive">
+        <table class="table is-bordered is-striped is-narrow is-fullwidth">
+          <thead>
+            <tr>
+            <th>No.</th>
+            <th>PARK HALINDE</th>
+            <th>PLAKA</th>
+            <th>RENK</th>
+            <th>MODEL</th>
+            <th>ISLETME</th>
+            <th>LOKASYON</th>
+            <th>SAATLIK UCRET</th>
+            <th>ODEME</th>
+            <th>ISLETME SEC</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @each(vch in araclar)
+              <tr>
+                <td>{{ ($loop.index + 1) }}</td>
+                <td> {{vch.parkyeris[0].car_parked}}</td>
+                <td> {{ vch.plaka }}</td>
+                <td> {{ vch.renk }}</td>
+                <td> {{ vch.model }}</td>
+                <td> {{ vch.lokasyons[0].name}}</td>
+                <td> {{ vch.parkyeris[0].lokasyon_id }}</td>
+                <td> {{ vch.parkyeris[0].saatlik_ucret }}</td>
+                <td> {{ vch.parkyeris[0].odeme }}</td>
+
+                <td>
+                <form action="{{route('/users/vehicles/parkVehicle')}}" method="POST">
+
+                    <select name="isletme_id" id="isletme_id">
+                      @each(is in isletmes)
+                    <option value="{{ is.id }}">{{is.isletme_adi}}</option>
+                      @endeach
+                    </select>
+                    <input type="hidden" name="plaka" value="{{vch.plaka}}" />
+
+                    <button type="submit" class="button is-success is-outlined">
+                      <span>PARK VEHICLE</span>
+                      <span class="icon is-small">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                </form>
+              </td>
+
+                <td>
+                  <form action="/users/vehicles/unparkVehicle" method="POST">
+                    <button name="plaka" value="{{vch.plaka}}" class="button is-success is-outlined">
+                      <span>UNPARK VEHICLE</span>
+                      <span class="icon is-small">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                  </form>
+                </td>
+
+                <td>
+                  <button class="button is-danger is-outlined">
+                    <span>DELETE</span>
+                    <span class="icon is-small">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+                  </button>
+              </td>
+            </tr>
+              @else
+                <tr>
+                  <td colspan="3" class="has-text-centered">No vehicle has registered!</td>
+                </tr>
+            @endeach
+          </tbody>
+        </table>
+        <form action="/users/vehicles/addVehicle" method="POST">
+
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <input class="input" type="text" name="plaka" value="{{ old('plaka', '') }}" placeholder="PLAKA">
+              <br> <br>
+              <input class="input" type="text" name="model" value="{{ old('model', '') }}" placeholder="MODEL">
+              <br> <br>
+              <input class="input" type="text" name="renk" value="{{ old('renk', '') }}" placeholder="RENK">
+            </div>
+
+            </div>
+            <div class="control">
+              <button type="submit" class="button is-dark is-fullwidth is-uppercase" style="position: flex">
+                  ADD VEHICLE
+              </button>
+          </div>
+
+          {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('plaka'), hasErrorFor('plaka')) }}
+        </form>
+      </div>
+
+</div>
+
+@endsection

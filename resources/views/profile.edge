@@ -1,0 +1,46 @@
+@layout('layout.app')
+
+
+@section('content')
+
+  <div class="columns">
+    <div class="column is-4 is-offset-4">
+
+    <div class="field">
+      <label class="label">ADDING VEHICLES</label>
+    </div>
+
+    <form action="/users/vehicles/addVehicle" method="POST">
+
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <input class="input" type="text" name="plaka" value="{{ old('plaka', '') }}" placeholder="PLAKA">
+          <br> <br>
+          <input class="input" type="text" name="model" value="{{ old('model', '') }}" placeholder="MODEL">
+          <br> <br>
+          <input class="input" type="text" name="renk" value="{{ old('renk', '') }}" placeholder="RENK">
+        </div>
+
+        </div>
+        <div class="control">
+          <button type="submit" class="button is-dark is-fullwidth is-uppercase" style="position: flex">
+              ADD VEHICLE
+          </button>
+      </div>
+
+      {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('plaka'), hasErrorFor('plaka')) }}
+    </form>
+
+    <br>
+
+    <form action="{{ route('/users/vehicles') }}" method="get">
+
+      <div class="control">
+        <button  type="submit" class="button is-dark is-fullwidth is-uppercase">SHOW VEHICLES</button>
+      </div>
+    </form>
+
+
+    </div>
+  </div>
+@endsection

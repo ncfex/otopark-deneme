@@ -1,0 +1,62 @@
+@layout('layout.app')
+
+@section('content')
+
+      <div class="box" style="width: max-content;">
+        <h1 class="title">ISLETME LIST</h1>
+
+      <div class="table-responsive">
+        <table class="table is-bordered is-striped is-narrow is-fullwidth">
+          <thead>
+            <tr>
+            <th>No.</th>
+            <th>ISLETME ID</th>
+            <th>ISLETME NAME</th>
+            <th>BOS YERLER</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @each(isletme in isletmeler)
+              <tr>
+                <td>{{ ($loop.index + 1) }}</td>
+                <td> {{isletme.id}}</td>
+                <td> {{isletme.isletme_adi}}</td>
+                <td>
+                <select name="loks" id="loks">
+                  @each(loks in isletme.lokasyons)
+                    @if(loks.is_Free == 1)
+                <option value="{{loks.id}}">{{loks.name}}</option>
+                    @endif
+                  @endeach
+                </select>
+              </td>
+            </tr>
+              @else
+                <tr>
+                  <td colspan="3" class="has-text-centered">No isletme has registered!</td>
+                </tr>
+            @endeach
+          </tbody>
+        </table>
+        <form action="/admin/isletme/addIsletme" method="POST">
+
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <input class="input" type="text" name="isletme_adi" value="{{ old('plaka', '') }}" placeholder="ISLETME ADI">
+              <br> <br>
+              <input class="input" type="text" name="lokasyonAdet" value="{{ old('model', '') }}" placeholder="LOKASYON ADEDI">
+            </div>
+            </div>
+            <div class="control">
+              <button type="submit" class="button is-dark is-fullwidth is-uppercase" style="position: flex">
+                  ADD ISLETME
+              </button>
+          </div>
+
+          {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('plaka'), hasErrorFor('plaka')) }}
+        </form>
+      </div>
+
+</div>
+@endsection

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADOPARK</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .div1 {
+      width: 300px;
+      height: 100px;
+      box-sizing: border-box;
+    }
+
+    .div2 {
+      width: 300px;
+      height: 100px;
+      padding: 50px;
+      border: 1px solid red;
+    }
+
+    .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+    </style>
+</head>
+<body>
+
+  <nav class="navbar is-dark">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">ADOPARK</a>
+
+        <button class="button navbar-burger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          @loggedIn
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                {{ auth.user.username }}
+              </a>
+{{session}}
+              <div class="navbar-dropdown">
+                <a class="navbar-item" href="/users/profile">Profile</a>
+                <a class="navbar-item" href="/users/vehicles">Vehicles</a>
+                <a class="navbar-item" href="/logout">Logout</a>
+              </div>
+
+
+            </div>
+          @else
+            <a class="navbar-item" href="/adminLogin">ADMIN Login</a>
+            <a class="navbar-item" href="/adminRegister">ADMIN Register</a>
+            <a class="navbar-item" href="/login">Login</a>
+            <a class="navbar-item" href="/register">Register</a>
+          @endloggedIn
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="section">
+    <div class="container" style="left:-10%">
+      @!section('content')
+    </div>
+  </div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
